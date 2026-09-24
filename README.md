@@ -57,7 +57,7 @@
 
 2. **Clone and open**:
    ```bash
-   git clone https://github.com/your-username/youplayer.apk.git
+   git clone https://https://github.com/anyelo888ra-ux/youplayer.apk
    cd youplayer.apk
    ```
 
