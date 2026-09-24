@@ -1,0 +1,6 @@
+{
+  "name": "YouPlayer",
+  "description": "Clean, privacy-friendly open-source video streaming player with zero API keys required, background playback, favorites, history, and offline mode.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

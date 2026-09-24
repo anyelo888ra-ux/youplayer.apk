@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0F0F0F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>YouPlayer - Privacy-Friendly Open-Source Video Player</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="/assets/icon-192.png">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-icon">▶</div>
+      <span>YouPlayer</span>
+    </div>
+    <div style="font-size: 0.85rem; color: #aaa;">Zero API Keys Required</div>
+  </header>
+
+  <main>
+    <div class="video-grid" id="videoGrid">
+      <!-- Embedded Player Container -->
+      <div style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px;">
+        <iframe id="mainPlayer" style="width:100%; height:100%; border:none;" src="https://www.youtube-nocookie.com/embed/LXb3EKWsInQ?autoplay=0" allowfullscreen></iframe>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(console.error);
+      });
+    }
+  </script>
+</body>
+</html>
