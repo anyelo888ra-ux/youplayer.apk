@@ -26,6 +26,7 @@ jobs:
         with:
           gradle-version: '8.13'
 
+      # Se genera el wrapper primero si no está en el repositorio, pero es vital darle permisos después
       - name: Generate Gradle Wrapper
         run: gradle wrapper --gradle-version 8.13
 
@@ -39,4 +40,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: YouPlayer-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          # Usamos un comodín (*) para que la acción encuentre el archivo sin importar si renombraste el APK base en tu build.gradle
+          path: app/build/outputs/apk/debug/*.apk
