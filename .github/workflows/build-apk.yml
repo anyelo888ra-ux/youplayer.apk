@@ -21,14 +21,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Cambiado de 8.1.3 a la versión de Gradle correcta (8.13)
-      - name: Setup Gradle 8.13
+      # Actualizado a la versión 9.2.1 requerida por tu proyecto
+      - name: Setup Gradle 9.2.1
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '8.13'
+          gradle-version: '9.2.1'
 
+      # Forzamos a que el wrapper use también la versión 9.2.1
       - name: Generate Gradle Wrapper
-        run: gradle wrapper --gradle-version 8.13
+        run: gradle wrapper --gradle-version 9.2.1
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -41,3 +42,4 @@ jobs:
         with:
           name: YouPlayer-debug-apk
           path: app/build/outputs/apk/debug/*.apk
+
