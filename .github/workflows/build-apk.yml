@@ -21,33 +21,26 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Forzamos la instalación exacta de Gradle 9.2.1 en el entorno de la máquina virtual
+      # Instalamos Gradle 9.2.1 de forma global en la máquina de GitHub
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
           gradle-version: '9.2.1'
 
-      # Modificamos directamente el archivo de propiedades del proyecto para sincronizar la versión antes de compilar
-      - name: Force Gradle version in wrapper properties
-        run: |
-          mkdir -p gradle/wrapper
-          echo "distributionBase=GRADLE_USER_HOME" > gradle/wrapper/gradle-wrapper.properties
-          echo "distributionPath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
-          echo "distributionUrl=https\://services.gradle.org/distributions/gradle-9.2.1-bin.zip" >> gradle/wrapper/gradle-wrapper.properties
-          echo "zipStoreBase=GRADLE_USER_HOME" >> gradle/wrapper/gradle-wrapper.properties
-          echo "zipStorePath=wrapper/dists" >> gradle/wrapper/gradle-wrapper.properties
+      # Como no tienes el wrapper en tu repositorio, lo creamos desde cero aquí mismo
+      - name: Generate Missing Gradle Wrapper
+        run: gradle wrapper --gradle-version 9.2.1
 
+      # Ahora que el archivo ya existe en el servidor, le damos los permisos necesarios
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # Añadimos flags para refrescar dependencias y omitir la validación estricta de configuración previa
+      # Compilamos usando el ejecutable recién creado
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace --no-daemon --refresh-dependencies
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: YouPlayer-debug-apk
           path: app/build/outputs/apk/debug/*.apk
-
-
