@@ -21,23 +21,15 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      # Instalamos Gradle 9.2.1 de forma global en la máquina de GitHub
+      # Instalamos de manera global la versión exacta 9.3.1 exigida en el log
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: '9.2.1'
+          gradle-version: '9.3.1'
 
-      # Como no tienes el wrapper en tu repositorio, lo creamos desde cero aquí mismo
-      - name: Generate Missing Gradle Wrapper
-        run: gradle wrapper --gradle-version 9.2.1
-
-      # Ahora que el archivo ya existe en el servidor, le damos los permisos necesarios
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      # Compilamos usando el ejecutable recién creado
+      # Compilamos usando directamente el motor de Gradle global
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace --no-daemon
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
